@@ -75,13 +75,13 @@ const ctx = canvas.getContext('2d');
 
 ```
 
-Obs. 1: por padrão, o tamanho do elemento canvas é de 300x150 pixels. Como é possível observar acima, configuramos nosso canvas para ser um quadrado com lateral de 500 pixels.
+**Obs. 1:** por padrão, o tamanho do elemento canvas é de 300x150 pixels. Como é possível observar acima, configuramos nosso canvas para ser um quadrado com lateral de 500 pixels.
 
-Obs. 2: caso o browser não tenha suporte ao canvas, o conteúdo que está dentro da tag será renderizado ao invés do container do canvas.
+**Obs. 2:** caso o browser não tenha suporte ao canvas, o conteúdo que está dentro da tag será renderizado ao invés do container do canvas.
 
-Obs. 3: o CSS tem apenas algumas configurações simples para vizualizarmos a área do nosso canvas.
+**Obs. 3:** o CSS tem apenas algumas configurações simples para vizualizarmos a área do nosso canvas.
 
-Obs.4 : poderíamos ter colocado os códigos JavaScript que vamos utilizar para manipular o canvas dentro do próprio index.html mas, para deixarmos mais organizado, criamos o arquivo app.js.
+**Obs. 4 :** poderíamos ter colocado os códigos JavaScript que vamos utilizar para manipular o canvas dentro do próprio index.html mas, para deixarmos mais organizado, criamos o arquivo app.js.
 
 3. Antes de começarmos a codar, abra seu navegador, vá em Arquivo -> Abrir e navegue até a pasta deste tutorial. Selecione o arquivo index.html e marque para abrí-lo. Deverá aparecer uma página com um quadrado desenhado. É isso, hora de codar! \o/
 
