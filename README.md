@@ -3,13 +3,13 @@ Log Iron Hack
 
 # Sobre este tutorial
 
-O objetivo deste tutorial é introduzir o elemento canvas e mostrar sua utilização fazendo algumas animações usando duas dimensões.
+O objetivo deste tutorial é explicar o elemento canvas e mostrar sua utilização fazendo algumas animações usando duas dimensões.
 
 ### Introdução ao Canvas
 
 O que é o canvas?
 
-O canvas é um elemento do HTML5 que pode ser usado para desenhar/renderizar gráficos, fazer composição de imagens e animações que normalmente são feitas por JavaScript.
+É um elemento do HTML5 que pode ser usado para desenhar/renderizar gráficos, fazer composição de imagens e animações que normalmente são feitas por JavaScript.
 
 E por que precisamos do canvas? Por que não usamos o próprio DOM do HTML?
 
@@ -25,7 +25,7 @@ Vamos começar montando o esquelto da nossa aplicação:
 
 2. Dentro desse diretório, crie 3 arquivos (index.html, app.css, app.js) com os respectivos códigos:
 
-index.html
+**index.html**
 
 ```
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ index.html
 </html>
 ```
 
-app.css
+**app.css**
 
 ```
 * {
@@ -64,7 +64,7 @@ canvas {
   background-color: black;
 }
 ```
-app.js
+**app.js**
 
 ```
 // Getting the DOM element.
