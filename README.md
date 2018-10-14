@@ -27,7 +27,7 @@ Vamos começar montando o esquelto da nossa aplicação:
 
 **index.html**
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +48,7 @@ Vamos começar montando o esquelto da nossa aplicação:
 
 **app.css**
 
-```
+```css
 * {
   margin: 0;
   padding: 0;
@@ -66,7 +66,7 @@ canvas {
 ```
 **app.js**
 
-```
+```javascript
 // Getting the DOM element.
 const canvas = document.getElementById('my-canvas');
 
@@ -81,23 +81,34 @@ const ctx = canvas.getContext('2d');
 
 **Obs. 3:** o CSS tem apenas algumas configurações simples para vizualizarmos a área do nosso canvas.
 
-**Obs. 4 :** poderíamos ter colocado os códigos JavaScript que vamos utilizar para manipular o canvas dentro do próprio index.html mas, para deixarmos mais organizado, criamos o arquivo app.js.
+**Obs. 4:** poderíamos ter colocado os códigos JavaScript que vamos utilizar para manipular o canvas dentro do próprio index.html mas, para deixarmos mais organizado, criamos o arquivo app.js.
 
-3. Antes de começarmos a codar, abra seu navegador, vá em Arquivo -> Abrir e navegue até a pasta deste tutorial. Selecione o arquivo index.html e marque para abrí-lo. Deverá aparecer uma página com um quadrado desenhado. É isso, hora de codar! \o/
+3. Antes de começarmos a codar, abra seu navegador, vá em Arquivo -> Abrir e navegue até a pasta deste tutorial. Selecione o arquivo index.html e marque para abrí-lo. Deverá aparecer uma página com um quadrado desenhado semelhante à imagem abaixo.
+
+****************************** IMAGEM
 
 ### Nosso grid
 
-Semelhante ao plano cartesiano, o canvas 2d tem dois eixos (x, y). Só tem uma pequena diferença em relação a orientação que você já está acosumado, que pode ser facilmente entendida na figura abaixo:
+Semelhante ao plano cartesiano, o canvas 2d tem dois eixos (x, y). Só tem uma pequena diferença em relação à orientação que você já está acostumado, que pode ser facilmente entendida na figura abaixo:
 
 ****************************** IMAGEM
+
+ É isso, hora de codar! \o/
 
 ### Renderizando alguma coisa!
 
 Agora sim...
 
-Vamos desenhar um retangulo cinza no canto esquerdo superior do canvas. Para isso, coloque o código abaixo após as linhas que já existem no arquivo app.js
+Vamos desenhar um retangulo cinza no canto esquerdo superior do canvas. Para isso, substitua o código do arquivo app.js pelo código abaixo:
 
-```
+```javascript
+// Getting the DOM element.
+const canvas = document.getElementById('my-canvas');
+
+// Getting the 2d context.
+const ctx = canvas.getContext('2d');
+
+// Drawing the little rectangle.
 ctx.fillStyle = 'grey';
 ctx.fillRect(0, 0, 50, 50);
 ```
@@ -123,7 +134,9 @@ Chama a função uma vez após o tempo mínimo especificado no segundo parâmetr
 requestAnimationFrame(função de retorno)
 Fala para o browser controlar uma animação que será desenhada pela função passada como parâmetro.
 
-```
+Para este exemplo, vamos usar o setInterval. Substitua novamente o código do app.js pelo código abaixo.
+
+```javascript
 // Getting the DOM element.
 const canvas = document.getElementById('my-canvas');
 
@@ -160,6 +173,98 @@ const render = () => {
 // Starting looper.
 looper = setInterval(render, 0);
 ```
+
+### Reaproveitando objetos
+
+Até agora nosso código está bem simples. Vamos fazer algumas alterações para conseguirmos reaproveitar objetos, desenhar vários no canvas e animá-los.
+
+Nesta etapa vamos usar um pouco de POO (programação orientada à objetos).
+
+O primeiro passo é fazer uma classe que nos permitirá ter várias instâncias de objetos. Cada instância terá suas próprias propriedades.
+
+A ideia é que a cada ciclo de renderização mudemos os parâmetros de cada instância para que todas se movimentem.
+
+Aqui já começamos a ver a performance do canvas ao renderizar vários objetos simultaneamente.
+
+```javascript
+// Some app setup.
+const ENEMIES_STORE = [];
+const ENEMIES_SIZE = 50;
+const ENEMIES_COLORS = [
+  'red', 'blue', 'yellow', 'white', 'grey',
+  'green', 'purple', 'navy', 'silver', 'olive',
+  'lime', 'fuchsia', 'teal', 'aqua', 'maroon'
+];
+
+// Getting the DOM element.
+const canvas = document.getElementById('my-canvas');
+
+// Getting the 2d context.
+const ctx = canvas.getContext('2d');
+
+// Our looper control.
+let looper;
+
+// Animation frames counter.
+let frames = 0;
+
+// Our class that will generate enemies instances.
+class Enemy {
+  constructor(x) {
+    this.x = x;
+    this.y = 0;
+    this.width = ENEMIES_SIZE;
+    this.height = ENEMIES_SIZE;
+    // Getting a random color when the object is instantiated.
+    this.color = ENEMIES_COLORS[Math.floor(Math.random() * ENEMIES_COLORS.length)];
+  }
+
+  draw() {
+    this.y += 1;
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, ENEMIES_SIZE, ENEMIES_SIZE);  
+  }
+}
+
+// This function just instantiate one enemy in a random x position and add it to the array of enemies.
+const createEnemy = () => {
+  // Each 50 frames we create a new enemy.
+  if (frames % ENEMIES_SIZE === 0) {
+    // Set enemy x coordinate from 0 to 450.
+    const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
+    // Adding the enemy to the array of enemies.
+    ENEMIES_STORE.push(new Enemy(x));
+  }
+}
+
+// This functions performs a loop in the enemies array and draw each enemy.
+const drawEnemies = () => {
+  // Drawing all enemies.
+  ENEMIES_STORE.forEach(enemy => enemy.draw());
+}
+
+// Canvas cleaner.
+const resetCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// Each loop we call render function.
+const render = () => {
+  // We clean everything in the canvas.
+  resetCanvas();
+
+  // Incremeting frames for each loop.
+  frames += 1;
+
+  // Intantiate one new enemy at a random x position and add it to the enemies array.
+  createEnemy();
+
+  // Draw all enemies available in the enemies array.
+  drawEnemies();
+}
+
+// Starting looper.
+looper = setInterval(render, 0);
+```
+
 
 ### Referência
 
