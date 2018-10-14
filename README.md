@@ -13,7 +13,7 @@ O que é o canvas?
 
 E por que precisamos do canvas? Por que não usamos o próprio DOM do HTML?
 
-Na verdade é possível fazer uma animação simples direto no DOM movendo elementos do HTML. A diferença é que o canvas é muito mais performático quando falamos en renderização. Se quisermos mover vários objetos usando 60fps, teremos um péssimo resultado fora do canvas que é otimizado para renderização.
+Na verdade é possível fazer uma animação simples direto no DOM movendo elementos do HTML. A diferença é que o canvas é muito mais performático quando falamos em renderização. Se quisermos mover vários objetos usando 60fps, teremos um péssimo resultado fora do canvas que é otimizado para renderização.
 
 ### Configurando o ambiente
 
@@ -97,7 +97,7 @@ Semelhante ao plano cartesiano, o canvas 2d tem dois eixos (x, y). Só tem uma p
 
 Agora sim...
 
-Vamos desenhar um retangulo cinza no canto esquerdo superior do canvas. Para isso, substitua o código do arquivo app.js pelo código abaixo:
+Vamos desenhar um retângulo cinza no canto esquerdo superior do canvas. Para isso, substitua o código do arquivo app.js pelo código abaixo:
 
 ```javascript
 // Getting the DOM element.
@@ -113,22 +113,22 @@ ctx.fillRect(0, 0, 50, 50);
 
 ### Primeira animação
 
-Vamos agora fazer esse retangulo se mover da esquerda para direita e parar. Para isso, basta arrumarmos alguma forma de incrementarmos o x do retangulo.
+Vamos agora fazer esse retângulo se mover da esquerda para direita e parar. Para isso, basta arrumarmos alguma forma de incrementarmos a coordenada x do retângulo.
 
-Se fizermos apenas um looping, o retangulo irá se mover mas, será muito rápido ou seja, precisamos de algum mecanismo que incremente o x com um intervalo de tempo que possamos ter algum controle.
+Se fizermos apenas um looping normal, o retângulo irá se mover mas, será muito rápido ou seja, precisamos de algum mecanismo que incremente o x com um intervalo de tempo que possamos ter algum controle de tempo para cada interação.
 
 Existem 3 formas de fazer isso: setTimeout, setInterval e requestAnimationFrame.
 
-setInterval(função, espera mínima)
+* setInterval(função, espera mínima)
 Chama a função que é passada como parâmetro repetidamente a cada intervalo especificado em milisegundos no segundo parâmetro
 
-setTimeout(funcão, espera mínima)
+* setTimeout(funcão, espera mínima)
 Chama a função uma vez após o tempo mínimo especificado no segundo parâmetro.
 
-requestAnimationFrame(função de retorno)
+* requestAnimationFrame(função de retorno)
 Fala para o browser controlar uma animação que será desenhada pela função passada como parâmetro.
 
-Para este exemplo, vamos usar o setInterval. Substitua novamente o código do app.js pelo código abaixo.
+Para este tutorial, vamos usar o setInterval. Substitua novamente o código do app.js pelo código abaixo.
 
 ```javascript
 // Getting the DOM element.
@@ -165,8 +165,12 @@ const render = () => {
 }
 
 // Starting looper.
-looper = setInterval(render, 0);
+looper = setInterval(render, 10);
 ```
+
+Como você pode ver, implementamos um looper que chama a função render a cada 10 milisegundos. 
+
+A função render cada vez que é chamada limpa o canvas e chama a função drawRectangle incrementando a coordenada x do retângulo em 1.
 
 ### Reaproveitando objetos
 
