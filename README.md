@@ -170,7 +170,7 @@ looper = setInterval(render, 10);
 
 Como você pode ver, implementamos um looper que chama a função render a cada 10 milisegundos. 
 
-A função render cada vez que é chamada limpa o canvas e chama a função drawRectangle incrementando a coordenada x do retângulo em 1.
+A função render cada vez que é chamada limpa o canvas e chama a função drawRectangle incrementando a coordenada x do retângulo em 1 pixel.
 
 ### Reaproveitando objetos
 
