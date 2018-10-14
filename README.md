@@ -574,7 +574,7 @@ E temos um jogo funcionando! \o/
 ### Autor
 
 Rodrigo Leme de Mello
-@lemerodrigo
+[@lemerodrigo](https://twitter.com/lemerodrigo)
 
 ### Referências
 
