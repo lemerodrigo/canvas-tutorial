@@ -1,7 +1,7 @@
 
 ![Iron Hack](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/ih.png)
 
-# Jogo em Canvas + JavaScript em 01h30 by Ironhack
+# Jogo em Canvas + JavaScript by Ironhack
 
 O objetivo deste tutorial é explicar o elemento canvas e mostrar sua utilização fazendo algumas animações usando duas dimensões.
 
