@@ -1,5 +1,5 @@
 
-![Iron Hack](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/ih.png =150x)
+![Iron Hack](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/ih.png)
 
 # Sobre este tutorial
 
@@ -83,15 +83,13 @@ const ctx = canvas.getContext('2d');
 
 **Obs. 4:** poderíamos ter colocado os códigos JavaScript que vamos utilizar para manipular o canvas dentro do próprio index.html mas, para deixarmos mais organizado, criamos o arquivo app.js.
 
-3. Antes de começarmos a codar, abra seu navegador, vá em Arquivo -> Abrir e navegue até a pasta deste tutorial. Selecione o arquivo index.html e marque para abrí-lo. Deverá aparecer uma página com um quadrado desenhado semelhante à imagem abaixo.
-
-****************************** IMAGEM
+3. Antes de começarmos a codar, abra seu navegador, vá em Arquivo -> Abrir e navegue até a pasta deste tutorial. Selecione o arquivo index.html e marque para abrí-lo. Deverá aparecer uma página com fundo cinza e um quadrado preto desenhado.
 
 ### Nosso grid
 
 Semelhante ao plano cartesiano, o canvas 2d tem dois eixos (x, y). Só tem uma pequena diferença em relação à orientação que você já está acostumado, que pode ser facilmente entendida na figura abaixo:
 
-****************************** IMAGEM
+![Canvas grid](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/grid.jpg)
 
  É isso, hora de codar! \o/
 
@@ -112,10 +110,6 @@ const ctx = canvas.getContext('2d');
 ctx.fillStyle = 'grey';
 ctx.fillRect(0, 0, 50, 50);
 ```
-
-Deverá ter aparecido algo assim:
-
-****************** IMAGEM
 
 ### Primeira animação
 
@@ -563,6 +557,8 @@ looper = setInterval(render, 0);
 Criamos nesta última etapa a função gameOver, a função collisionChecker e o método no nosso herói chamado checkCollision.
 
 E temos um jogo funcionando! \o/
+
+![Canvas grid](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/victory.gif)
 
 **Desafios**
 
