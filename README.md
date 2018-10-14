@@ -1,5 +1,5 @@
 
-![Iron Hack](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/ih.png)
+![Iron Hack](https://raw.githubusercontent.com/lemerodrigo/canvas-tutorial/master/img/ih.png =150x)
 
 # Sobre este tutorial
 
@@ -575,11 +575,10 @@ E temos um jogo funcionando! \o/
 7. Alterar sistema de score.
 8. Sonorizar.
 
-\o/
-
 ### Autor
 
 Rodrigo Leme de Mello
+@lemerodrigo
 
 ### Referências
 
