@@ -36,12 +36,12 @@ Vamos começar montando o esquelto da nossa aplicação:
     <title>Canvas in the house!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="app.css" />
-    <script src="app.js"></script>
 </head>
 <body>
-    <canvas id="canvas-tutorial" width="500" height="500">
-        Your browser does not support canvas!
+  <canvas id="my-canvas" width="500" height="500">
+    Your browser does not support canvas!
     </canvas>
+    <script src="app.js"></script>
 </body>
 </html>
 ```
