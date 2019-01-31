@@ -128,7 +128,7 @@ Chama a função uma vez após o tempo mínimo especificado no segundo parâmetr
 * requestAnimationFrame(função de retorno)
 Fala para o browser controlar uma animação que será desenhada pela função passada como parâmetro.
 
-Para este tutorial, vamos usar o setInterval. Substitua novamente o código do app.js pelo código abaixo.
+Para este tutorial, vamos usar o requestAnimationFrame. Substitua novamente o código do app.js pelo código abaixo.
 
 ```javascript
 // Getting the DOM element.
@@ -137,20 +137,20 @@ const canvas = document.getElementById('my-canvas');
 // Getting the 2d context.
 const ctx = canvas.getContext('2d');
 
-// Our looper control.
-let looper;
+// Our animation control.
+let running = false;
 
 // Out X value that will be incremented.
 let rectX = 0;
 
 // Stops the animation.
-const stopLooper = () => clearInterval(looper);
+const stopAnimation = () => running = false;
 
 // Function that draws the rectangle.
 const drawRectangle = (x) => {
   // Stops the animation when the rectangle reaches the end.
   if (x > canvas.width - 50) {
-    stopLooper();
+    stopAnimation();
   }
   ctx.fillStyle = 'grey';
   ctx.fillRect(x, 0, 50, 50);
@@ -162,10 +162,16 @@ const render = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // Call the function that draws the rectangle incrementing x.
   drawRectangle(rectX += 1);
+
+  // Calling the animation again and again.
+  if (running) {
+    window.requestAnimationFrame(render);
+  }
 }
 
-// Starting looper.
-looper = setInterval(render, 10);
+// Starting animation.
+running = true;
+render();
 ```
 
 Como você pode ver, implementamos um looper que chama a função render a cada 10 milisegundos. 
@@ -200,8 +206,8 @@ const canvas = document.getElementById('my-canvas');
 // Getting the 2d context.
 const ctx = canvas.getContext('2d');
 
-// Our looper control.
-let looper;
+// Our animation control.
+let running = false;
 
 // Animation frames counter.
 let frames = 0;
@@ -218,7 +224,7 @@ class Enemy {
   }
 
   draw() {
-    this.y += 1;
+    this.y += 10;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, ENEMIES_SIZE, ENEMIES_SIZE);  
   }
@@ -227,7 +233,7 @@ class Enemy {
 // This function just instantiate one enemy in a random x position and add it to the array of enemies.
 const createEnemy = () => {
   // Each 50 frames we create a new enemy.
-  if (frames % ENEMIES_SIZE === 0) {
+  if (frames % 5 === 0) {
     // Set enemy x coordinate from 0 to 450.
     const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
     // Adding the enemy to the array of enemies.
@@ -257,10 +263,16 @@ const render = () => {
 
   // Draw all enemies available in the enemies array.
   drawEnemies();
+
+  // Calling the animation again and again.
+  if (running) {
+    window.requestAnimationFrame(render);
+  }
 }
 
-// Starting looper.
-looper = setInterval(render, 0);
+// Starting animation.
+running = true;
+render();
 ```
 
 Agora no seu canvas tem uma "chuva" de retângulos com cores aleatórias. 
@@ -293,8 +305,8 @@ const canvas = document.getElementById('my-canvas');
 // Getting the 2d context.
 const ctx = canvas.getContext('2d');
 
-// Our looper control.
-let looper;
+// Our animation control.
+let running = false;
 
 // Animation frames counter.
 let frames = 0;
@@ -311,7 +323,7 @@ class Enemy {
   }
 
   draw() {
-    this.y += 1;
+    this.y += 10;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, ENEMIES_SIZE, ENEMIES_SIZE);  
   }
@@ -341,7 +353,7 @@ class Hero {
 // This function just instantiate one enemy in a random x position and add it to the array of enemies.
 const createEnemy = () => {
   // Each 50 frames we create a new enemy.
-  if (frames % ENEMIES_SIZE === 0) {
+  if (frames % 5 === 0) {
     // Set enemy x coordinate from 0 to 450.
     const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
     // Adding the enemy to the array of enemies.
@@ -377,7 +389,16 @@ const render = () => {
 
   // Draw all enemies available in the enemies array.
   drawEnemies();
+
+  // Calling the animation again and again.
+  if (running) {
+    window.requestAnimationFrame(render);
+  }
 }
+
+// Starting animation.
+running = true;
+render();
 
 // Keyboard listener to check if the user press arrows keys.
 window.addEventListener('keydown', (e) => {
@@ -392,9 +413,6 @@ window.addEventListener('keydown', (e) => {
     ourHero.x += HERO_SIZE;
   }    
 });
-
-// Starting looper.
-looper = setInterval(render, 0);
 ```
 
 Como você pode ver no código acima, agora também temos uma classe que cria nosso herói. O herói será renderizado a cada chamada da nossa função render com a diferença que apenas a posição dele será atualizada. Não teremos criação de novos heróis.
@@ -430,8 +448,8 @@ const canvas = document.getElementById('my-canvas');
 // Getting the 2d context.
 const ctx = canvas.getContext('2d');
 
-// Our looper control.
-let looper;
+// Our animation control.
+let running = false;
 
 // Animation frames counter.
 let frames = 0;
@@ -448,10 +466,36 @@ class Enemy {
   }
 
   draw() {
-    this.y += 1;
+    this.y += 10;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, ENEMIES_SIZE, ENEMIES_SIZE);  
   }
+}
+
+// This function just instantiate one enemy in a random x position and add it to the array of enemies.
+const createEnemy = () => {
+  // Each 50 frames we create a new enemy.
+  if (frames % 5 === 0) {
+    // Set enemy x coordinate from 0 to 450.
+    const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
+    // Adding the enemy to the array of enemies.
+    ENEMIES_STORE.push(new Enemy(x));
+  }
+}
+
+// This functions performs a loop in the enemies array and draw each enemy.
+const drawEnemies = () => {
+  // Drawing all enemies.
+  ENEMIES_STORE.forEach(enemy => enemy.draw());
+}
+
+// Colission checker.
+const collisionChecker = () => {
+  ENEMIES_STORE.forEach(enemy => {
+    if (ourHero.checkCollision(enemy)) {
+      gameOver();
+    }
+  })
 }
 
 // Our Hero class.
@@ -480,37 +524,19 @@ class Hero {
   }  
 }
 
-// This function just instantiate one enemy in a random x position and add it to the array of enemies.
-const createEnemy = () => {
-  // Each 50 frames we create a new enemy.
-  if (frames % ENEMIES_SIZE === 0) {
-    // Set enemy x coordinate from 0 to 450.
-    const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
-    // Adding the enemy to the array of enemies.
-    ENEMIES_STORE.push(new Enemy(x));
-  }
-}
-
-// This functions performs a loop in the enemies array and draw each enemy.
-const drawEnemies = () => {
-  // Drawing all enemies.
-  ENEMIES_STORE.forEach(enemy => enemy.draw());
-}
-
-// Colission checker.
-const collisionChecker = () => {
-  ENEMIES_STORE.forEach(enemy => {
-    if (ourHero.checkCollision(enemy)) {
-      gameOver();
-    }
-  })
-}
-
 // We just need one hero, so let's instantiate it.
 const ourHero = new Hero();
 
 // Canvas cleaner.
 const resetCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// Stop the looper and print game over message.
+const gameOver = () => {
+  running = false;
+  ctx.font = GAME_OVER_FONT;
+  ctx.fillStyle = GAME_OVER_COLOR;
+  ctx.fillText(GAME_OVER_TEXT, GAME_OVER_X, GAME_OVER_Y);
+}
 
 // Each loop we call render function.
 const render = () => {
@@ -531,7 +557,16 @@ const render = () => {
 
   // Collision checker.
   collisionChecker();
+
+  // Calling the animation again and again.
+  if (running) {
+    window.requestAnimationFrame(render);
+  }
 }
+
+// Starting animation.
+running = true;
+render();
 
 // Keyboard listener to check if the user press arrows keys.
 window.addEventListener('keydown', (e) => {
@@ -546,17 +581,6 @@ window.addEventListener('keydown', (e) => {
     ourHero.x += HERO_SIZE;
   }    
 });
-
-// Stop the looper and print game over message.
-const gameOver = () => {
-  clearInterval(looper);
-  ctx.font = GAME_OVER_FONT;
-  ctx.fillStyle = GAME_OVER_COLOR;
-  ctx.fillText(GAME_OVER_TEXT, GAME_OVER_X, GAME_OVER_Y);
-}
-
-// Starting looper.
-looper = setInterval(render, 0);
 ```
 Criamos nesta última etapa a função gameOver, a função collisionChecker e o método no nosso herói chamado checkCollision.
 

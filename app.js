@@ -20,8 +20,8 @@ const canvas = document.getElementById('my-canvas');
 // Getting the 2d context.
 const ctx = canvas.getContext('2d');
 
-// Our looper control.
-let looper;
+// Our animation control.
+let running = false;
 
 // Animation frames counter.
 let frames = 0;
@@ -38,10 +38,36 @@ class Enemy {
   }
 
   draw() {
-    this.y += 1;
+    this.y += 10;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, ENEMIES_SIZE, ENEMIES_SIZE);  
   }
+}
+
+// This function just instantiate one enemy in a random x position and add it to the array of enemies.
+const createEnemy = () => {
+  // Each 50 frames we create a new enemy.
+  if (frames % 5 === 0) {
+    // Set enemy x coordinate from 0 to 450.
+    const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
+    // Adding the enemy to the array of enemies.
+    ENEMIES_STORE.push(new Enemy(x));
+  }
+}
+
+// This functions performs a loop in the enemies array and draw each enemy.
+const drawEnemies = () => {
+  // Drawing all enemies.
+  ENEMIES_STORE.forEach(enemy => enemy.draw());
+}
+
+// Colission checker.
+const collisionChecker = () => {
+  ENEMIES_STORE.forEach(enemy => {
+    if (ourHero.checkCollision(enemy)) {
+      gameOver();
+    }
+  })
 }
 
 // Our Hero class.
@@ -70,37 +96,19 @@ class Hero {
   }  
 }
 
-// This function just instantiate one enemy in a random x position and add it to the array of enemies.
-const createEnemy = () => {
-  // Each 50 frames we create a new enemy.
-  if (frames % ENEMIES_SIZE === 0) {
-    // Set enemy x coordinate from 0 to 450.
-    const x = Math.floor(Math.random() * 10) * ENEMIES_SIZE;
-    // Adding the enemy to the array of enemies.
-    ENEMIES_STORE.push(new Enemy(x));
-  }
-}
-
-// This functions performs a loop in the enemies array and draw each enemy.
-const drawEnemies = () => {
-  // Drawing all enemies.
-  ENEMIES_STORE.forEach(enemy => enemy.draw());
-}
-
-// Colission checker.
-const collisionChecker = () => {
-  ENEMIES_STORE.forEach(enemy => {
-    if (ourHero.checkCollision(enemy)) {
-      gameOver();
-    }
-  })
-}
-
 // We just need one hero, so let's instantiate it.
 const ourHero = new Hero();
 
 // Canvas cleaner.
 const resetCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// Stop the animation and print game over message.
+const gameOver = () => {
+  running = false;
+  ctx.font = GAME_OVER_FONT;
+  ctx.fillStyle = GAME_OVER_COLOR;
+  ctx.fillText(GAME_OVER_TEXT, GAME_OVER_X, GAME_OVER_Y);
+}
 
 // Each loop we call render function.
 const render = () => {
@@ -121,7 +129,16 @@ const render = () => {
 
   // Collision checker.
   collisionChecker();
+
+  // Calling the animation again and again.
+  if (running) {
+    window.requestAnimationFrame(render);
+  }
 }
+
+// Starting animation.
+running = true;
+render();
 
 // Keyboard listener to check if the user press arrows keys.
 window.addEventListener('keydown', (e) => {
@@ -136,14 +153,3 @@ window.addEventListener('keydown', (e) => {
     ourHero.x += HERO_SIZE;
   }    
 });
-
-// Stop the looper and print game over message.
-const gameOver = () => {
-  clearInterval(looper);
-  ctx.font = GAME_OVER_FONT;
-  ctx.fillStyle = GAME_OVER_COLOR;
-  ctx.fillText(GAME_OVER_TEXT, GAME_OVER_X, GAME_OVER_Y);
-}
-
-// Starting looper.
-looper = setInterval(render, 0);
