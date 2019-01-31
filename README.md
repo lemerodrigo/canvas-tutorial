@@ -15,7 +15,7 @@ E por que precisamos do canvas? Por que não usamos o próprio DOM do HTML?
 
 Na verdade é possível fazer uma animação simples direto no DOM movendo elementos do HTML. A diferença é que o canvas é muito mais performático quando falamos em renderização. Se quisermos mover vários objetos usando 60fps, teremos um péssimo resultado fora do canvas que é otimizado para renderização.
 
-### Configurando o ambiente
+# Etapa 1 - Configurando o ambiente
 
 É fácil usar o canvas porém, é preciso conhecimentos básicos de HTML5 e JavaScript antes de começar.
 
@@ -93,7 +93,7 @@ Semelhante ao plano cartesiano, o canvas 2d tem dois eixos (x, y). Só tem uma p
 
  É isso, hora de codar! \o/
 
-### Renderizando alguma coisa!
+# Etapa 2 - Renderizando alguma coisa!
 
 Agora sim...
 
@@ -111,7 +111,7 @@ ctx.fillStyle = 'grey';
 ctx.fillRect(0, 0, 50, 50);
 ```
 
-### Primeira animação
+# Etapa 3 - Primeira animação
 
 Vamos agora fazer esse retângulo se mover da esquerda para direita e parar. Para isso, basta arrumarmos alguma forma de incrementarmos a coordenada x do retângulo.
 
@@ -178,7 +178,7 @@ Como você pode ver, implementamos um looper que chama a função render a cada 
 
 A função render cada vez que é chamada limpa o canvas e chama a função drawRectangle incrementando a coordenada x do retângulo em 1 pixel.
 
-### Reaproveitando objetos
+# Etapa 4 - Reaproveitando objetos
 
 Até agora nosso código está bem simples. Vamos fazer algumas alterações para conseguirmos reaproveitar objetos, desenhar vários no canvas e animá-los.
 
@@ -286,6 +286,8 @@ Essa abordagem tem um problema grave pois, a cada passagem pela função de rend
 Por enquanto continuaremos assim! :-(
 
 Já que temos inimigos vindo de cima para baixo, que tal criarmos um herói que seja controlado pelo teclado e que tenha que - por enquanto - fugir dos inimigos?
+
+# Etapa 5 - Nosso herói
 
 ```javascript
 // Some app setup.
@@ -421,9 +423,9 @@ Adicionamos um listener que dispara uma função toda vez que alguma tecla é pr
 
 Caso seja uma das setas, mudamos a posição do nosso herói.
 
-**Extra**
-
 Agora já temos quase um jogo funcional. Falta apenas implementarmos um detector de colisões e uma mensagem de Game Over!
+
+# Etapa 6 - Game over
 
 ```javascript
 // Some app setup.
